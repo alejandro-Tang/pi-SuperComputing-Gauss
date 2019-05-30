@@ -1,4 +1,4 @@
-// Joshua McCarville-Schueths
+// Joshua McCarvilleSchueths
 // Student ID: 12122858
 // gaussian.cpp
 // 
@@ -12,6 +12,7 @@
 #include <ctime>
 #include <vector>
 #include <iomanip>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -36,6 +37,10 @@ int main(int argc, char * argv[])
   double ** data = NULL;
   double determinant;
   vector<double> file_buffer;
+
+  struct timeval timeBegin, timeEnd;
+	long int totalTime;
+
 
   // Just get the initialization of the program going.
   MPI_Init(&argc, &argv);
@@ -114,6 +119,9 @@ int main(int argc, char * argv[])
      End For
    End For  
   */
+
+  gettimeofday(&timeBegin, 0);
+
   send_buffer = new double[num_rows];
   int cur_row = 0;
   int swaps = 0;
@@ -204,6 +212,10 @@ int main(int argc, char * argv[])
 	  }
 	  cout << endl;
   }
+
+  gettimeofday(&timeEnd, 0);
+	totalTime = timeEnd.tv_usec - timeBegin.tv_usec;
+	cout << "TIEMPO SEGÚN LO MEDIDO POR NOSOTROS" << ((long double) totalTime )/ 1000000.0 << endl;
 
   // If root node, output the runtime.
   if(!rank_1)
