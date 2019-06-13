@@ -1,0 +1,4 @@
+var totalTime = 0.024556
+tiempo en secs = 27
+Número de cores: 0. Tiempo medido: 27.0246
+Determinant value: 9.98539e+30

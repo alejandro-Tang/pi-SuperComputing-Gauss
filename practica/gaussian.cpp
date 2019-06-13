@@ -194,8 +194,6 @@ int runProcess(int size, int argc, char * argv[]){
     //Implementación nuetra de medir el tiempo
     gettimeofday(&timeEnd, 0);
     totalTime = (double) (timeEnd.tv_usec - timeBegin.tv_usec)/1000000.0;
-    cout << "var totalTime = " << totalTime << endl;
-    cout << "tiempo en secs = " << (double) timeEnd.tv_sec - timeBegin.tv_sec << endl;
     totalTime += timeEnd.tv_sec - timeBegin.tv_sec;
     cout <<"Número de cores: " << rank_1 << ". Tiempo medido: "<<((long double) totalTime) << endl;
 
