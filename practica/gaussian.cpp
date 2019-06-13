@@ -37,7 +37,7 @@ int runProcess(int size, int argc, char * argv[]){
   vector<double> file_buffer;
 
   struct timeval timeBegin, timeEnd;
-  long int totalTime;
+  long double totalTime;
 
   // If the input file is not given, print message and exit.
   if(argc < 2)
@@ -193,9 +193,11 @@ int runProcess(int size, int argc, char * argv[]){
 
     //Implementación nuetra de medir el tiempo
     gettimeofday(&timeEnd, 0);
-    totalTime = timeEnd.tv_usec - timeBegin.tv_usec;
+    totalTime = (double) (timeEnd.tv_usec - timeBegin.tv_usec)/1000000.0;
+    cout << "var totalTime = " << totalTime << endl;
+    cout << "tiempo en secs = " << (double) timeEnd.tv_sec - timeBegin.tv_sec << endl;
     totalTime += timeEnd.tv_sec - timeBegin.tv_sec;
-    cout <<"Número de cores: " << rank_1 << ". Tiempo medido: "<<((long double) totalTime )/ 1000000.0 << endl;
+    cout <<"Número de cores: " << rank_1 << ". Tiempo medido: "<<((long double) totalTime) << endl;
 
   // If root node, output the runtime.
   if(!rank_1)
@@ -209,9 +211,10 @@ int runProcess(int size, int argc, char * argv[]){
   for(int i = 0; i < num_cols; i++)
     delete [] data[i];
   delete [] data;
-  
+
   // Finalize and exit. 
   //MPI_Finalize();
+    return 0;
 } 
 
 int main(int argc, char * argv[]){
