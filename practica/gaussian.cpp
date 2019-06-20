@@ -23,6 +23,8 @@ void testProcesses(int coreNum, int argc, char * argv[]);
 
 int rank_1; // size;
 
+long double totalTime;
+
 //Convertimos el main en un proceso
 int runProcess(int size, int argc, char * argv[]){
   double sTime, eTime, rTime;
@@ -37,7 +39,6 @@ int runProcess(int size, int argc, char * argv[]){
   vector<double> file_buffer;
 
   struct timeval timeBegin, timeEnd;
-  long double totalTime;
 
   // If the input file is not given, print message and exit.
   if(argc < 2)
@@ -195,13 +196,13 @@ int runProcess(int size, int argc, char * argv[]){
     gettimeofday(&timeEnd, 0);
     totalTime = (double) (timeEnd.tv_usec - timeBegin.tv_usec)/1000000.0;
     totalTime += timeEnd.tv_sec - timeBegin.tv_sec;
-    cout <<"Número de cores: " << rank_1 << ". Tiempo medido: "<<((long double) totalTime) << endl;
+    //cout <<"Número de cores: " << rank_1 << ". Tiempo medido: "<<((long double) totalTime) << endl;
 
   // If root node, output the runtime.
-  if(!rank_1)
-  {
+  if(!rank_1) { 
+	cout  << ((long double) totalTime) << endl; 
     //cout << "Run Time: " << rTime << endl;
-    cout << "Determinant value: " << determinant << endl;
+    //cout << "Determinant value: " << determinant << endl;
   }
   
   // A bit of house cleaning.
@@ -224,13 +225,9 @@ void testProcesses(int coreNum, int argc, char * argv[]){
 	MPI_Init(&argc, &argv);
   	MPI_Comm_rank(MPI_COMM_WORLD, &rank_1);
   	MPI_Comm_size(MPI_COMM_WORLD, &coreNum);
-
-//for(int i = 1; i <= coreNum; i = 2*i){
-
-        runProcess(coreNum, argc, argv);
-   // }
+	
+	runProcess(coreNum, argc, argv);
 	MPI_Finalize();
-    //cout << "Nro de core: " << rank_1<< endl;
 }
 
 
