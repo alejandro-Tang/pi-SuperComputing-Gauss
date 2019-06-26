@@ -1,1 +1,2 @@
-gaussian.o: gaussian.cpp
+gaussian.o: gaussian.cpp /usr/local/include/mpi.h \
+  /usr/local/include/mpi_portable_platform.h
